@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Water_Balance</string>
+    <string name="add_data">Введите количество выпитой воды \n(в мл)</string>
+    <string name="confirm">Подтвердить \n ввод</string>
+    <string name="statistics">К статистике</string>
+    <string name="settings">Введите данные о себе</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="gender">Ваш пол</string>
+    <string name="weight">Введите вес</string>
+    <string name="icon">Icon</string>
+    <string name="waterAmount">Выпито %d мл</string>
+</resources>

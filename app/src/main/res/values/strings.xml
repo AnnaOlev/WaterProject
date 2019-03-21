@@ -9,5 +9,6 @@
     <string name="gender">Ваш пол</string>
     <string name="weight">Введите вес</string>
     <string name="icon">Icon</string>
-    <string name="waterAmount">Выпито %d мл</string>
+    <string name="waterAmount">Выпито %d мл, что составляет %f от нормы</string>
+    <string name="toSettings">Пожалуйста, заполните информацию о себе в настройках</string>
 </resources>

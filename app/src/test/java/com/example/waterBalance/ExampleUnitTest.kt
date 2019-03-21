@@ -1,4 +1,4 @@
-package com.example.water_balance
+package com.example.waterBalance
 
 import org.junit.Test
 

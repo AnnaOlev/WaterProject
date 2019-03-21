@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/mAddWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="124dp"
         android:ems="10"
         android:hint="@string/weight"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.179"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/mGenderHint"
+        app:layout_constraintEnd_toEndOf="@+id/mGenderHint"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.628" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/mEnterHint"
         android:layout_width="220dp"
         android:layout_height="58dp"
         android:layout_marginBottom="8dp"
@@ -33,15 +35,15 @@
         android:text="@string/settings"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editText"
+        app:layout_constraintBottom_toTopOf="@+id/mAddWeight"
+        app:layout_constraintEnd_toEndOf="@+id/mAddWeight"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="@+id/mAddWeight"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/mFemaleCheck"
         android:layout_width="127dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -50,15 +52,15 @@
         android:layout_marginTop="44dp"
         android:text="@string/female"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox2"
+        app:layout_constraintBottom_toTopOf="@+id/mConfirmParams"
+        app:layout_constraintEnd_toStartOf="@+id/mMaleCheck"
         app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/mGenderHint"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/mMaleCheck"
         android:layout_width="127dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -67,15 +69,15 @@
         android:layout_marginTop="44dp"
         android:text="@string/male"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/mConfirmParams"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/mGenderHint"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/mGenderHint"
         android:layout_width="169dp"
         android:layout_height="39dp"
         android:layout_marginBottom="276dp"
@@ -84,24 +86,25 @@
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/mConfirmParams"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/mConfirmParams"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/mConfirmParams"
         android:layout_width="163dp"
         android:layout_height="58dp"
         android:layout_marginBottom="72dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/holo_blue_dark"
         android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/mGenderHint"
         app:layout_constraintVertical_bias="1.0" />
 
     <android.support.constraint.Guideline

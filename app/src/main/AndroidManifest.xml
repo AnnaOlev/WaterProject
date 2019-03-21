@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.water_balance">
+    package="com.example.waterBalance">
 
     <application
         android:allowBackup="true"
@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DayActivity">
+        <activity android:name="com.example.waterBalance.DayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".StatisticsActivity" />
+        <activity android:name="com.example.waterBalance.SettingsActivity" />
+        <activity android:name="com.example.waterBalance.StatisticsActivity" />
     </application>
 
 </manifest>

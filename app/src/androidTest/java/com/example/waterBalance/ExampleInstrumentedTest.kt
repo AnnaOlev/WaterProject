@@ -1,4 +1,4 @@
-package com.example.water_balance
+package com.example.waterBalance
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

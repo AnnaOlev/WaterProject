@@ -18,6 +18,8 @@
         </activity>
         <activity android:name="com.example.waterBalance.SettingsActivity" />
         <activity android:name="com.example.waterBalance.StatisticsActivity" />
+        <activity android:name="com.example.waterBalance.FemaleBodyVisualActivity" />
+        <activity android:name="com.example.waterBalance.MaleBodyVisualActivity" />
     </application>
 
 </manifest>

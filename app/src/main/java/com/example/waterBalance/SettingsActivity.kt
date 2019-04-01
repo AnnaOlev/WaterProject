@@ -24,7 +24,6 @@ class SettingsActivity : AppCompatActivity() {
                     intent.putExtra("gender", "female")
                 else if (mMaleCheck.isChecked)
                     intent.putExtra("gender", "male")
-
             val temp = mAddWeight!!.text.toString()
             if (!TextUtils.isEmpty(temp)) {
                 intent.putExtra("weight", Integer.parseInt(temp))

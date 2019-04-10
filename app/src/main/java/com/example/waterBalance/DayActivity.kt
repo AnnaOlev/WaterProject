@@ -54,8 +54,9 @@ open class DayActivity : AppCompatActivity() {
                 maleBodyVisualIntent.putExtra("usersNorm", usersNorm)
                 startActivityForResult(maleBodyVisualIntent, DATA_REQUEST)
             } else mTodayData!!.text = "Пожалуйста, укажите свой пол в настройках!"
-        }
 
+
+        }
 
     }
 

@@ -18,7 +18,7 @@ class MaleBodyVisualActivity : DayActivity() {
         val imageView = findViewById<ImageView>(R.id.maleBody)
         howManyWater = intent.getIntExtra("waterAmounts", 0)
         usersNorm = intent.getIntExtra("usersNorm",0)
-        maleText!!.text = String.format(getString(R.string.waterAmount), howManyWater, countPartOfNorm())
+
         val partOfNorm : Float = countPartOfNorm()
         if (partOfNorm == 0.0f)
             imageView.setImageResource(R.drawable.male0percent)

@@ -9,17 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.waterBalance.DayActivity">
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <activity android:name=".DayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.waterBalance.SettingsActivity" />
-        <activity android:name="com.example.waterBalance.StatisticsActivity" />
-        <activity android:name="com.example.waterBalance.FemaleBodyVisualActivity" />
-        <activity android:name="com.example.waterBalance.MaleBodyVisualActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".StatisticsActivity" />
+        <activity android:name=".FemaleBodyVisualActivity" />
+        <activity android:name=".MaleBodyVisualActivity" />
     </application>
 
 </manifest>

@@ -18,6 +18,13 @@ open class DayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_day)
 
+        // Запуск сервиса уведомлений
+        if (!NotificationService.isRunning){
+            Intent(this, NotificationService::class.java).also {
+                startService(it)
+            }
+        }
+
         mConfirmButton.setOnClickListener {
             val temp = mAddData!!.text.toString()
             if (!TextUtils.isEmpty(temp)) {

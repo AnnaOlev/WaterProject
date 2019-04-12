@@ -22,7 +22,6 @@ open class DayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_day)
 
-<<<<<<< HEAD
         prefs = Prefs(this)
 
         usersNorm = prefs!!.usersNorm
@@ -33,14 +32,13 @@ open class DayActivity : AppCompatActivity() {
 
         if (howManyWater != 0)
             mTodayData!!.text =  String.format(getString(R.string.waterAmount), howManyWater, countPartOfNorm())
-=======
+
         // Запуск сервиса уведомлений
         if (!NotificationService.isRunning){
             Intent(this, NotificationService::class.java).also {
                 startService(it)
             }
         }
->>>>>>> 138e55af09bf74895bbfacd3c3d8ed8286133287
 
         mConfirmButton.setOnClickListener {
             val temp = mAddData!!.text.toString()

@@ -10,13 +10,16 @@ class SqliteDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val DATABASE_NAME = "WATER_PROJECT_DB"
         val DATABASE_VERSION = 1
         val TABLE_NAME = "project"
+        val DATE = "date"
         val DailyQuantity = 0
         val PartOfNormalQuantity = 0
     }
 
+    //попыталась привести все это в порядок, не вполне уверена, что верно
+
     private val SQL_CREATE_ENTIRES = "CREATE TABLE $TABLE_NAME + " +
-            "(" + "${DailyQuantity} INT" +
-            "${PartOfNormalQuantity} INT"
+            "(" + " _id integer primary key autoincrement, " + "$DATE DATE"+"$DailyQuantity DOUBLE" +
+            "$PartOfNormalQuantity DOUBLE" + ")"
 
     private val SQL_DELETE_ENTIRES = "DROP TABLE IF EXISTS ${TABLE_NAME}"
 

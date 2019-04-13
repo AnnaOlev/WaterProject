@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import kotlinx.android.synthetic.main.activity_day.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 open class DayActivity : AppCompatActivity() {
 
@@ -13,10 +15,30 @@ open class DayActivity : AppCompatActivity() {
     protected var gender: String? = "null"
     protected var weight = 0
     protected val DATA_REQUEST = 1
+    var prefs: Prefs? = null
+    val sdf = SimpleDateFormat("dd/M/yyyy")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_day)
+
+        prefs = Prefs(this)
+
+        usersNorm = prefs!!.usersNorm
+        gender = prefs!!.usersGender
+
+        if (prefs!!.currentDate == sdf.format(Date()))
+            howManyWater = prefs!!.currentAmount
+
+        if (howManyWater != 0)
+            mTodayData!!.text =  String.format(getString(R.string.waterAmount), howManyWater, countPartOfNorm())
+
+        // Запуск сервиса уведомлений
+        if (!NotificationService.isRunning){
+            Intent(this, NotificationService::class.java).also {
+                startService(it)
+            }
+        }
 
         mConfirmButton.setOnClickListener {
             val temp = mAddData!!.text.toString()
@@ -27,7 +49,10 @@ open class DayActivity : AppCompatActivity() {
                 }
                 else {
                     howManyWater += Integer.parseInt(temp)
+                    prefs!!.currentAmount = howManyWater
                     mTodayData!!.text = String.format(getString(R.string.waterAmount), howManyWater, countPartOfNorm())
+
+                    prefs!!.currentDate = sdf.format(Date())
                 }
             }
         }
@@ -54,8 +79,9 @@ open class DayActivity : AppCompatActivity() {
                 maleBodyVisualIntent.putExtra("usersNorm", usersNorm)
                 startActivityForResult(maleBodyVisualIntent, DATA_REQUEST)
             } else mTodayData!!.text = "Пожалуйста, укажите свой пол в настройках!"
-        }
 
+
+        }
 
     }
 
@@ -65,8 +91,10 @@ open class DayActivity : AppCompatActivity() {
         if (requestCode == DATA_REQUEST)
             if (resultCode == RESULT_OK) {
                 gender = data!!.getStringExtra("gender")
+                prefs!!.usersGender = gender as String
                 weight = data.getIntExtra("weight", 0)
-                usersNorm = countNorm() // оно находится здесь временно
+                usersNorm = countNorm()
+                prefs!!.usersNorm = usersNorm// оно находится здесь временно
                 // так как потом будет храниться долгосрочно, надо решить, где поставить функцию подсчта, чтобы запускалось только если правда надо
                 // аналогичный вопрос про "когда надо" касается и пола с весом
             }

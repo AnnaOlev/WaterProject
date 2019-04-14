@@ -3,8 +3,9 @@ package com.example.waterBalance
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
 import kotlinx.android.synthetic.main.activity_day.*
+import android.text.TextUtils
+import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,6 +18,7 @@ open class DayActivity : AppCompatActivity() {
     protected val DATA_REQUEST = 1
     var prefs: Prefs? = null
     val sdf = SimpleDateFormat("dd/M/yyyy")
+    val dbHandler = SqliteDB(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,15 @@ open class DayActivity : AppCompatActivity() {
 
         if (prefs!!.currentDate == sdf.format(Date()))
             howManyWater = prefs!!.currentAmount
+        else{
+            howManyWater = prefs!!.currentAmount
+            val dailyData = DailyData(howManyWater, countPartOfNorm(), prefs!!.currentDate)
+            dbHandler.addItem(dailyData)
+            howManyWater = 0
+            prefs!!.currentDate = sdf.format(Date())
+            //предыдущие две строки немного костыль, но как лучше сделать не знаю
+            mTodayData!!.text = dbHandler.getAllDays() //это тестовый вариант, ествественно
+        }
 
         if (howManyWater != 0)
             mTodayData!!.text =  String.format(getString(R.string.waterAmount), howManyWater, countPartOfNorm())
@@ -52,7 +63,7 @@ open class DayActivity : AppCompatActivity() {
                     prefs!!.currentAmount = howManyWater
                     mTodayData!!.text = String.format(getString(R.string.waterAmount), howManyWater, countPartOfNorm())
 
-                    prefs!!.currentDate = sdf.format(Date())
+                    prefs!!.currentDate = sdf.format(Date()) //это тоже тестовый вариант
                 }
             }
         }

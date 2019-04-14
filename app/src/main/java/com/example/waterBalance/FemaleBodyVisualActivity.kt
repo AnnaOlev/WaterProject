@@ -15,7 +15,7 @@ class FemaleBodyVisualActivity : DayActivity() {
     private fun fillFemalePart() {
 
         val imageView = findViewById<ImageView>(R.id.femaleBody)
-        howManyWater = intent.getIntExtra("waterAmounts", 0)
+        howManyWater = intent.getDoubleExtra("waterAmounts", 0.0)
         usersNorm = intent.getIntExtra("usersNorm",0)
         val partOfNorm : Float = countPartOfNorm()
         if (partOfNorm == 0.0f)

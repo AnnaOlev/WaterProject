@@ -18,7 +18,7 @@ class SqliteDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     private val SQL_CREATE_ENTIRES = "CREATE TABLE $TABLE_NAME " +
-            "(" +  "$DateColumn String primaty key, " + "$DailyQuantityColumn Float, " +
+            "(" +  "$DateColumn String primaty key, " + "$DailyQuantityColumn Double, " +
             "$PartOfNormalQuantityColumn Float" + ")"
 
     private val SQL_DELETE_ENTIRES = "DROP TABLE IF EXISTS ${TABLE_NAME}"
@@ -30,10 +30,6 @@ class SqliteDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL(SQL_DELETE_ENTIRES)
         onCreate(db)
-    }
-
-    private fun deleteItem() {
-
     }
 
     fun addItem(data: DailyData): Boolean {
@@ -49,25 +45,27 @@ class SqliteDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return (Integer.parseInt("$result") != -1)
     }
 
-    fun getAllDays(): String {
-        var allDays: String = "";
+    fun getAllDays(): ArrayList<DailyData> {
         val db = readableDatabase
+        val dataList = ArrayList<DailyData>()
         val selectALLQuery = "SELECT * FROM $TABLE_NAME"
         val cursor = db.rawQuery(selectALLQuery, null)
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    var date = cursor.getString(cursor.getColumnIndex(DateColumn))
-                    var dailyQuantity = cursor.getString(cursor.getColumnIndex(DailyQuantityColumn))
-                    var partOfNormalQuantity = cursor.getString(cursor.getColumnIndex(PartOfNormalQuantityColumn))
+                    val date = cursor.getString(cursor.getColumnIndex(DateColumn))
+                    val dailyQuantity = cursor.getDouble(cursor.getColumnIndex(DailyQuantityColumn))
+                    val partOfNormalQuantity = cursor.getFloat(cursor.getColumnIndex(PartOfNormalQuantityColumn))
 
-                    allDays = "$allDays\n$date $dailyQuantity $partOfNormalQuantity"
+                    val dailyData = DailyData(dailyQuantity, partOfNormalQuantity.toFloat(), date)
+                    dataList.add(dailyData)
+
                 } while (cursor.moveToNext())
             }
         }
         cursor.close()
         db.close()
-        return allDays
+        return dataList
     }
 
 

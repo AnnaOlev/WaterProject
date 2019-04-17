@@ -19,4 +19,8 @@ class DailyData {
         this.partOfNormalQuantity = PartOfNoramlQuantity
         this.date = Date
     }
+
+    override fun toString() : String {
+        return String.format("$date было выпито $dailyQuantity мл, что составляет $partOfNormalQuantity от нормы.")
+    }
 }

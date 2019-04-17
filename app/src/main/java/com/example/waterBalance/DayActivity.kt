@@ -9,17 +9,19 @@ import android.text.TextUtils
 import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
+
 var selectedType : Int = 0 // Выбирается тип напитка(вне класса для того, чтобы можно было вызвать в адаптере)
+
 open class DayActivity : AppCompatActivity() {
 
     protected var howManyWater : Double = 0.0
+    val dbHandler = SqliteDB(this)
     protected var usersNorm = 0
     protected var gender: String? = "null"
     protected var weight = 0
     protected val DATA_REQUEST = 1
     var prefs: Prefs? = null
     val sdf = SimpleDateFormat("dd/M/yyyy")
-    val dbHandler = SqliteDB(this)
     var waterTypes : ArrayList<String> = ArrayList() // Типы напитков
     var waterTypesImg : ArrayList<Int> = ArrayList() // Картинки для напитков
     var waterPercentage : Double = 1.0 // Процент воды в определенном напитке
@@ -41,14 +43,13 @@ open class DayActivity : AppCompatActivity() {
 
         if (prefs!!.currentDate == sdf.format(Date()))
             howManyWater = prefs!!.currentAmount.toDouble()
-        else{
+        else if (prefs!!.currentDate != "default"){
             howManyWater = prefs!!.currentAmount.toDouble()
             val dailyData = DailyData(howManyWater, countPartOfNorm(), prefs!!.currentDate)
             dbHandler.addItem(dailyData)
             howManyWater = 0.0
             prefs!!.currentDate = sdf.format(Date())
             //предыдущие две строки немного костыль, но как лучше сделать не знаю
-            mTodayData!!.text = dbHandler.getAllDays() //это тестовый вариант, ествественно
         }
 
         if (howManyWater != 0.0)
@@ -61,8 +62,12 @@ open class DayActivity : AppCompatActivity() {
             }
         }
 
+        mTypeCheck.setOnClickListener{
+            selectedWaterType(selectedType)
+        }
+
         mConfirmButton.setOnClickListener {
-            selectedWaterType(selectedType) // Вообще, должен вызываться в 75 строке, но для проверки, при нажатии
+            //selectedWaterType(selectedType) Вообще, должен вызываться в 75 строке, но для проверки, при нажатии
             // кнопки "подтвердить ввод" будет меняться hint в зависимости от выбранного напитка
             val temp = mAddData!!.text.toString()
             if (!TextUtils.isEmpty(temp)) {
@@ -71,7 +76,7 @@ open class DayActivity : AppCompatActivity() {
                     mTodayData!!.text = getString(R.string.toSettings)
                 }
                 else {
-//                    selectedWaterType(selectedType)
+//                  selectedWaterType(selectedType)
                     Log.d("Water Percentage", "Water Percentage = " + waterPercentage)
                     howManyWater += Integer.parseInt(temp) * waterPercentage
                     prefs!!.currentAmount = howManyWater.toInt()
@@ -162,23 +167,23 @@ open class DayActivity : AppCompatActivity() {
     fun selectedWaterType(type : Int) {
         if (type == 0) {
             waterPercentage = 1.0
-            mAddData!!.setHint("Введите количество выпитой воды \n (в мл)")
+            mAddData!!.hint = "Введите количество выпитой воды \n (в мл)"
         }
         else if (type == 1) {
             waterPercentage = 0.80
-            mAddData!!.setHint("Введите количество выпитого чая \n (в мл)")
+            mAddData!!.hint = "Введите количество выпитого чая \n (в мл)"
         }
         else if (type == 2) {
             waterPercentage = 0.30
-            mAddData!!.setHint("Введите количество выпитого кофе \n (в мл)")
+            mAddData!!.hint = "Введите количество выпитого кофе \n (в мл)"
         }
         else if (type == 3) {
             waterPercentage = 0.87
-            mAddData!!.setHint("Введите количество выпитого молока \n (в мл)")
+            mAddData!!.hint = "Введите количество выпитого молока \n (в мл)"
         }
         else if (type == 4) {
             waterPercentage = 0.84
-            mAddData!!.setHint("Введите количество выпитого сока \n (в мл)")
+            mAddData!!.hint = "Введите количество выпитого сока \n (в мл)"
         }
     }
 

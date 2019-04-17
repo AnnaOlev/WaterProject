@@ -29,8 +29,6 @@ class NewAdapter(val waterTypes : ArrayList<String>, val waterTypesImages : Arra
     override fun getItemCount(): Int {
         return waterTypes.size
     }
-
-
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {

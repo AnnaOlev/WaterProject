@@ -29,6 +29,7 @@
         <activity android:name=".StatisticsActivity" />
         <activity android:name=".FemaleBodyVisualActivity" />
         <activity android:name=".MaleBodyVisualActivity" />
+        <activity android:name=".GraphActivity" />
     </application>
 
 </manifest>

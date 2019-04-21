@@ -62,6 +62,11 @@ open class DayActivity : AppCompatActivity() {
             }
         }
 
+        mGraphButton.setOnClickListener {
+            val graphIntent = Intent(this@DayActivity, GraphActivity::class.java)
+            startActivityForResult(graphIntent, DATA_REQUEST)
+        }
+
         mTypeCheck.setOnClickListener{
             selectedWaterType(selectedType)
         }

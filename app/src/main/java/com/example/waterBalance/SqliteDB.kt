@@ -2,6 +2,7 @@ package com.example.waterBalance
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
@@ -66,6 +67,39 @@ class SqliteDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         cursor.close()
         db.close()
         return dataList
+    }
+
+    fun getAllDaysDate() : Array<String> {
+        val db = readableDatabase
+        val size = DatabaseUtils.queryNumEntries(db, TABLE_NAME).toInt()
+        var i = 0
+        val datesList = Array<String>(size) { "it = $it" }
+        val selectQuery = "SELECT $DateColumn FROM $TABLE_NAME"
+        val cursor = db.rawQuery(selectQuery, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    datesList[i] = cursor.getString(cursor.getColumnIndex(DateColumn))
+                    i++
+                } while (cursor.moveToNext())
+            }
+        }
+        return datesList;
+    }
+
+    fun getAllDaysDailyQuantity() : ArrayList<Double> {
+        val dailyQuantityList = ArrayList<Double>()
+        val db = readableDatabase
+        val selectQuery = "SELECT $DailyQuantityColumn FROM $TABLE_NAME"
+        val cursor = db.rawQuery(selectQuery, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    dailyQuantityList.add(cursor.getDouble(cursor.getColumnIndex(DailyQuantityColumn)))
+                } while (cursor.moveToNext())
+            }
+        }
+        return dailyQuantityList;
     }
 
 

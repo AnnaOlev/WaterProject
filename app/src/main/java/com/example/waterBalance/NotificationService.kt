@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -16,6 +17,7 @@ class NotificationService : Service() {
             private set
     }
     private val scheduler = Executors.newScheduledThreadPool(1)
+    private val dbHandler = SqliteDB(this)
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         addChecks()
@@ -41,11 +43,14 @@ class NotificationService : Service() {
             // Максимальное колличество часов без воды
             val maxDelta = 2
 
-            // Примерный запрос к будущей базе данных.
-            // В самой базе, для каждой записи необходимо наличие поля с отметкой времени.
-            val query = "SELECT timestamp FROM stats ORDER BY timestamp FETCH FIRST ROW ONLY"
+            val days = dbHandler.getAllDays()
 
-            val lastDrinkTime = Calendar.getInstance().time // Здесь будет результат запроса
+            if (days.isEmpty())
+                return@scheduleAtFixedRate
+
+            val date = days.last().date
+            val lastDrinkTime = SimpleDateFormat("dd/M/yyyy").parse(date)
+
             val currentTime = Calendar.getInstance().time
 
             var delta = currentTime.time - lastDrinkTime.time

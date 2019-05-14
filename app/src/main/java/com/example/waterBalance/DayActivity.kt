@@ -18,8 +18,6 @@ open class DayActivity : AppCompatActivity() {
     val dbHandler = SqliteDB(this)
     protected var usersNorm = 0
     protected var gender: String? = "null"
-    protected var weight = 0
-    protected val DATA_REQUEST = 1
     var prefs: Prefs? = null
     val sdf = SimpleDateFormat("dd/M/yyyy")
     var waterTypes : ArrayList<String> = ArrayList() // Типы напитков
@@ -30,6 +28,9 @@ open class DayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_day)
 
+        gender = intent.getStringExtra("gender")
+        usersNorm = intent.getIntExtra("norm",0)
+
         addWaterTypes()
         addWaterTypesImages()
         // Создание горизонтального recycler view
@@ -37,9 +38,6 @@ open class DayActivity : AppCompatActivity() {
         recycle_view.adapter = NewAdapter(waterTypes, waterTypesImg, this)
 
         prefs = Prefs(this)
-
-        usersNorm = prefs!!.usersNorm
-        gender = prefs!!.usersGender
 
         if (prefs!!.currentDate == sdf.format(Date()))
             howManyWater = prefs!!.currentAmount.toDouble()
@@ -62,11 +60,6 @@ open class DayActivity : AppCompatActivity() {
             }
         }
 
-        mGraphButton.setOnClickListener {
-            val graphIntent = Intent(this@DayActivity, GraphActivity::class.java)
-            startActivityForResult(graphIntent, DATA_REQUEST)
-        }
-
         mTypeCheck.setOnClickListener{
             selectedWaterType(selectedType)
         }
@@ -85,7 +78,7 @@ open class DayActivity : AppCompatActivity() {
                     Log.d("Water Percentage", "Water Percentage = " + waterPercentage)
                     howManyWater += Integer.parseInt(temp) * waterPercentage
                     prefs!!.currentAmount = howManyWater.toInt()
-                    mTodayData!!.text = String.format(getString(R.string.waterAmount), howManyWater, countPartOfNorm())
+                    mTodayData!!.text = String.format("Выпито %.0f мл, что составляет %.3f от нормы", howManyWater, countPartOfNorm())
 
                     prefs!!.currentDate = sdf.format(Date()) //это тоже тестовый вариант
                     mAddData!!.setText("")
@@ -93,62 +86,27 @@ open class DayActivity : AppCompatActivity() {
             }
         }
 
-        mStatisticsButton!!.setOnClickListener {
-            val statisticsIntent = Intent(this@DayActivity, StatisticsActivity::class.java)
-            startActivity(statisticsIntent)
-        }
-
-        mSettingsButton!!.setOnClickListener {
-            val settingsIntent = Intent(this@DayActivity, SettingsActivity::class.java)
-            startActivityForResult(settingsIntent, DATA_REQUEST)
-        }
-
         mBodyVisualButton!!.setOnClickListener {
             if (gender == "female") {
                 val femaleBodyVisualIntent = Intent(this@DayActivity, FemaleBodyVisualActivity::class.java)
                 femaleBodyVisualIntent.putExtra("waterAmounts", howManyWater)
                 femaleBodyVisualIntent.putExtra("usersNorm", usersNorm)
-                startActivityForResult(femaleBodyVisualIntent, DATA_REQUEST)
+                startActivity(femaleBodyVisualIntent)
             } else if (gender == "male") {
                 val maleBodyVisualIntent = Intent(this@DayActivity, MaleBodyVisualActivity::class.java)
                 maleBodyVisualIntent.putExtra("waterAmounts", howManyWater)
                 maleBodyVisualIntent.putExtra("usersNorm", usersNorm)
-                startActivityForResult(maleBodyVisualIntent, DATA_REQUEST)
+                startActivity(maleBodyVisualIntent)
             } else mTodayData!!.text = "Пожалуйста, укажите свой пол в настройках!"
-
-
         }
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == DATA_REQUEST)
-            if (resultCode == RESULT_OK) {
-                gender = data!!.getStringExtra("gender")
-                prefs!!.usersGender = gender as String
-                weight = data.getIntExtra("weight", 0)
-                usersNorm = countNorm()
-                prefs!!.usersNorm = usersNorm// оно находится здесь временно
-                // так как потом будет храниться долгосрочно, надо решить, где поставить функцию подсчта, чтобы запускалось только если правда надо
-                // аналогичный вопрос про "когда надо" касается и пола с весом
-            }
-    }
-
-    private fun countNorm() : Int {
-
-        if (gender == "female")
-            return weight * 31
-        else if (gender == "male")
-            return weight * 35
-
-        return 0
     }
 
     fun countPartOfNorm() : Float {
         return howManyWater.toFloat() / usersNorm.toFloat()
     }
+
+
 
 
     // Добавление типов напитков
@@ -159,6 +117,7 @@ open class DayActivity : AppCompatActivity() {
         waterTypes.add("Молоко")
         waterTypes.add("Сок")
     }
+
 
     // Добавление картинок для каждого типа напитков
     fun addWaterTypesImages() {

@@ -21,14 +21,16 @@ class GraphActivity : AppCompatActivity() {
         datesList = dbHandler.getAllDaysDate()
         val graph = findViewById<GraphView>(R.id.graph)
         val staticLabelsFormatter = StaticLabelsFormatter(graph)
-        staticLabelsFormatter.setHorizontalLabels(datesList)
-        graph.gridLabelRenderer.labelFormatter = staticLabelsFormatter
-        val series = LineGraphSeries<DataPoint>()
-        for (i in 0 until datesList.size) {
-            series.appendData(DataPoint(i.toDouble(),dailyQuantityList.get(i)), true, datesList.size)
+        if (datesList.size > 2){
+            staticLabelsFormatter.setHorizontalLabels(datesList)
+            graph.gridLabelRenderer.labelFormatter = staticLabelsFormatter
+            val series = LineGraphSeries<DataPoint>()
+            for (i in 0 until datesList.size) {
+                series.appendData(DataPoint(i.toDouble(),dailyQuantityList.get(i)), true, datesList.size)
+            }
+            series.color = Color.YELLOW
+            graph.addSeries(series)
         }
-        series.color = Color.YELLOW
-        graph.addSeries(series)
     }
 }
 

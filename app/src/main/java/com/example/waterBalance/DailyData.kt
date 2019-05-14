@@ -21,6 +21,6 @@ class DailyData {
     }
 
     override fun toString() : String {
-        return String.format("$date было выпито $dailyQuantity мл, что составляет $partOfNormalQuantity от нормы.")
+        return String.format("$date было выпито %.0f мл, что составляет %.3f от нормы.", dailyQuantity,partOfNormalQuantity)
     }
 }

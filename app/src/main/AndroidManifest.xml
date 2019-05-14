@@ -30,6 +30,7 @@
         <activity android:name=".FemaleBodyVisualActivity" />
         <activity android:name=".MaleBodyVisualActivity" />
         <activity android:name=".GraphActivity" />
+        <activity android:name=".InfoActivity" />
     </application>
 
 </manifest>

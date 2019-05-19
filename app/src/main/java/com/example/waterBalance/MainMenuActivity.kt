@@ -30,6 +30,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         mGraphButton.setOnClickListener {
             val graphIntent = Intent(this@MainMenuActivity, GraphActivity::class.java)
+            graphIntent.putExtra("norm", usersNorm)
             startActivity(graphIntent)
         }
 
